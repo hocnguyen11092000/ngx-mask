@@ -11,6 +11,7 @@
       maxlength="13"
     />
   </div>
+  {{ someForm.get("price")?.errors | json }}
 
   <div class="form-group">
     <select formControlName="unit" #select>
@@ -23,3 +24,8 @@
     <button>submit</button>
   </div>
 </form>
+
+//router outlet
+<hr />
+<br />
+<router-outlet></router-outlet>
