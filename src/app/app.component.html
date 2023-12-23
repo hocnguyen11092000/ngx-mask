@@ -1,17 +1,37 @@
-<h2>hello world</h2>
+<input
+  type="text"
+  placeholder="thausand format"
+  [formControl]="thousandControl"
+  mask="dot_separator.0"
+  [validation]="false"
+  maxlength="15"
+  app-thausand
+  id="dot_mask"
+/>
+{{ thousandControl.value | json }}
+{{ thousandControl.errors | json }}
 
+<h2>hello world</h2>
 <form [formGroup]="someForm" (ngSubmit)="handleSubmitForm()">
+  {{ 10000000 | number : "" }}
   <div class="form-group">
     <input
-      [mask]="select.value !== 'PERCENT' ? 'comma_separator' : '0*,000'"
+      [mask]="select.value !== 'PERCENT' ? 'dot_separator.3' : '0*,000'"
       [dropSpecialCharacters]="false"
       type="text"
-      placeholder="input..."
+      placeholder="input mask"
       formControlName="price"
-      maxlength="13"
+      separatorLimit="99999999"
+      maxlength="17"
+      (input)="hanldeSlice($event, 'price', 17)"
+      #a
     />
   </div>
   {{ someForm.get("price")?.errors | json }}
+
+  <ng-container *ngIf="a.value">
+    {{ +someForm.get("price")?.getRawValue() | mask : "dot_separator.3" }}
+  </ng-container>
 
   <div class="form-group">
     <select formControlName="unit" #select>
@@ -29,3 +49,7 @@
 <hr />
 <br />
 <router-outlet></router-outlet>
+<app-list [title]="title">
+  <app-mod></app-mod>
+</app-list>
+<button (click)="changeTitle()">change title</button>

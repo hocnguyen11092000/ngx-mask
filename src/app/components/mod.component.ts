@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -11,6 +16,8 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
+import { AppService } from '../services/app.service';
+import { SubListComponent } from './sub-list.component';
 
 @Component({
   selector: 'app-mod',
@@ -42,17 +49,28 @@ import {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModComponent {
+export class ModComponent implements OnInit {
   constructor(
     private readonly _fb: FormBuilder,
     private readonly _activateRoute: ActivatedRoute
-  ) {}
+  ) {
+    console.log('compoent running');
+  }
+
+  private _appService = inject(AppService);
+  private _sub = inject(SubListComponent);
 
   readonly id$ = this._activateRoute.params.pipe(pluck('id'));
 
   readonly modForm: FormGroup = this._fb.group({
     name: [''],
   });
+
+  ngOnInit(): void {
+    console.log('compoent init');
+
+    console.log(this._sub);
+  }
 
   hanleSubmitForm() {
     if (this.modForm.valid) {

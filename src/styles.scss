@@ -17,3 +17,16 @@ button {
   padding: 8px 12px;
   border-radius: 4px;
 }
+
+table {
+  border-collapse: collapse;
+
+  & th,
+  td {
+    padding: 8px;
+  }
+
+  & tr {
+    border: 1px solid #ddd;
+  }
+}
